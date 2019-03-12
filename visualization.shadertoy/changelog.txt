@@ -1,3 +1,11 @@
+[B]1.1.6[/B]
+
+- Based on official v1.1.5 (Kodi 17)
+- Retouched shaders for ODROID-C2 compatibility
+- merge radomize mode from popcornmix
+- merge commits from popcornmix not pushed to xbmc
+- fixed cmake for ODROID-C2 compatibility
+
 [B]1.0.6[/B]
 
 - Add 2D led spectrum visualizer (remix)
