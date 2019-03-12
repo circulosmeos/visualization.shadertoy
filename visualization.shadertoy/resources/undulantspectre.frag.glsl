@@ -1,7 +1,7 @@
 // Taken from https://www.shadertoy.com/view/XsjGz3#
 
-static const vec3 COLOR1 = vec3(0.0, 0.0, 0.3);
-static const vec3 COLOR2 = vec3(0.5, 0.0, 0.0);
+const vec3 COLOR1 = vec3(0.0, 0.0, 0.3);
+const vec3 COLOR2 = vec3(0.5, 0.0, 0.0);
 float BLOCK_WIDTH = 0.01;
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )

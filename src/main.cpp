@@ -67,27 +67,37 @@ struct Preset {
 const std::vector<Preset> g_presets =
   {
    {"2D LED Spectrum by un1versal",             "2Dspectrum.frag.glsl",             99, -1, -1, -1},
-   {"Input Sound by iq",                        "input.frag.glsl",                  99, -1, -1, -1},
-   {"LED spectrum by simesgreen",               "ledspectrum.frag.glsl",            99, -1, -1, -1},
+   {"Alhambra on LSD by mfagerlund",            "alhambra.frag.glsl",               99, -1, -1, -1},
+   {"Audio Fl0wer by daek",                     "audioflower.frag.glsl",            99, -1, -1, -1},
    {"Audio Eclipse by airtight",                "audioeclipse.frag.glsl",           99, -1, -1, -1},
    {"Audio Reaktive by choard1895",             "audioreaktive.frag.glsl",          99, -1, -1, -1},
+   {"AudioSurf3 by 4rknova",                    "audiosurf3.frag.glsl",             99, -1, -1, -1},
    {"AudioVisual by Passion",                   "audiovisual.frag.glsl",            99, -1, -1, -1},
    {"Beating Circles by Phoenix72",             "beatingcircles.frag.glsl",         99, -1, -1, -1},
-   {"BPM by iq",                                "bpm.frag.glsl",                    99, -1, -1, -1},
+   {"Circle Wave by TekF",                      "circlewave.frag.glsl",             99, -1, -1, -1},
+   {"Circular by Mx7f",                         "circular.frag.glsl",               99, -1, -1, -1},
    {"Dancing Metalights by Danguafare",         "dancingmetalights.frag.glsl",      99, -1, -1, -1},
-   {"The Disco Tunnel by poljere",              "discotunnel.frag.glsl",             2, 13, 99, -1},
-   {"Gameboy by iq",                            "gameboy.frag.glsl",                99, -1, -1, -1},
+   {"Disco Transforms by seb0fh",               "discotransforms.frag.glsl",        99,  5, -1, -1},
+   {"Disco Tunnel by poljere",                  "discotunnel.frag.glsl",             2, 13, 99, -1},
    {"Electric pulse by un1versal",              "electricpulse.frag.glsl",          99, -1, -1, -1},
+   {"Explosive by epal",                        "explosive.frag.glsl",              99, -1, -1, -1},
+   {"Gameboy by iq",                            "gameboy.frag.glsl",                99, -1, -1, -1},
+   {"Input Sound by iq",                        "input.frag.glsl",                  99, -1, -1, -1},
+   {"LED spectrum by simesgreen",               "ledspectrum.frag.glsl",            99, -1, -1, -1},
+   {"Metaballs by the23",                       "metaballs.frag.glsl",              99, -1, -1, -1},
    {"Polar Beats by sauj123",                   "polarbeats.frag.glsl",             99, -1, -1, -1},
-   {"Simplicity Galaxy by CBS",                 "simplicitygalaxy.frag.glsl",       99, -1, -1, -1},
+   {"Sine Waves by popcornmix",                 "sinewaves.frag.glsl",              99, -1, -1, -1},
    {"Sound Flower by iq",                       "soundflower.frag.glsl",            99, -1, -1, -1},
-   {"Sound sinus wave by Eitraz",               "soundsinuswave.frag.glsl",         99, -1, -1, -1},
+   {"Sound sinus wave (based on Eitraz)",       "soundsinuswave.frag.glsl",         99, -1, -1, -1},
+   {"Sound sinus wave 2 (based on Eitraz)",     "soundsinuswave2.frag.glsl",        99, -1, -1, -1},
+   {"Spectrometer by FabriceNeyret2",           "spectrometer2.frag.glsl",          99, -1, -1, -1},
    {"Spectrometer by jaba",                     "spectrometer.frag.glsl",           99, -1, -1, -1},
-   {"symmetrical sound visualiser by thelinked","symmetricalsound.frag.glsl",       99, -1, -1, -1},
+   {"Symmetrical sound visualiser by thelinked","symmetricalsound.frag.glsl",       99, -1, -1, -1},
    {"Twisted Rings by poljere",                 "twistedrings.frag.glsl",           99, -1, -1, -1},
    {"Undulant Spectre by mafik",                "undulantspectre.frag.glsl",        99, -1, -1, -1},
-   {"Waves Remix by ADOB",                      "wavesremix.frag.glsl",             99, -1, -1, -1},
-   {"Circle Wave by TekF",                      "circlewave.frag.glsl",             99, -1, -1, -1}};
+   {"Voronoi distances by iq",                  "voronoidistances.frag.glsl",       99, -1, -1, -1},
+   {"Waves Remix by ADOB",                      "wavesremix.frag.glsl",             99, -1, -1, -1}
+};
 #else
 const std::vector<Preset> g_presets =
   {
@@ -465,6 +475,7 @@ std::string vsSource = "void main() { gl_Position = ftransform(); }";
 std::string fsHeader =
 "#extension GL_OES_standard_derivatives : enable\n"
 #ifdef HAS_GLES
+"#extension GL_EXT_shader_texture_lod : enable\n"
 "precision mediump float;\n"
 "precision mediump int;\n"
 #endif
