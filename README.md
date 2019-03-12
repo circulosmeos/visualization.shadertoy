@@ -2,9 +2,9 @@
 
 This is a [Kodi](http://kodi.tv) visualization addon.
 
-**WARNING**: This addon has been compiled for **[ODROID-C2 devices](https://www.hardkernel.com/shop/odroid-c2/)** with packaged **Kodi v17.6**.
+**WARNING**: This addon has been compiled for **[ODROID-C2 devices](https://www.hardkernel.com/shop/odroid-c2/)** with odroid's Ubuntu 16.04 packaged **Kodi v17.6**.
 
-**WARNING**: Do not install on devices different from ODROID-C2 unless you know that hardware is compatible (linux arm64, [GLESv2](https://en.wikipedia.org/wiki/OpenGL_ES)).
+**WARNING**: Do not install on devices different from ODROID-C2 unless you know that the hardware is compatible (linux arm64, [GLESv2](https://en.wikipedia.org/wiki/OpenGL_ES)).
 
 ## Motivation
 
@@ -23,7 +23,11 @@ Additionally, some shaders has been changed and other new ones have been added, 
 
 Also, *cmake* now correctly compile against GLESv2 libraries.
 
+OpenGLESv2 function `texture2DLodEXT` has been added to main.cpp with `#extension GL_EXT_shader_texture_lod : enable`.
+
 ## Problems
+
+**All shaders reinitiate every 8 seconds** - this is more obvious in the ones that cycle or evolve because the process is stopped: **it's quite annoying** and has obliged me to stop adding more interesting shaders. I haven't found the cause: any help is welcome!
 
 ## Build instructions
 
