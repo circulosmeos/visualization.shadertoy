@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: XBMC Main Translation Project (Frodo)\n"
+"Report-Msgid-Bugs-To: http://trac.xbmc.org/\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: XBMC Translation Team\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "Randomise"
+msgstr "Visualización aleatoria"
+
+msgctxt "#30010"
+msgid "hacking Mali450 (ODROID-C2)"
+msgstr "hackeando la GPU Mali450 (ODROID-C2)"
+
+msgctxt "#30020"
+msgid "Multiply time cycle (8 s) by:"
+msgstr "Multiplicar el ciclo de tiempo (8 s) por:"
+
+msgctxt "#30030"
+msgid "Show TEST visualizations in random mode"
+msgstr "Mostrar los TEST en modo aleatorio"
+
