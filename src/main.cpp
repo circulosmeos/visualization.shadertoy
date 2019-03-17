@@ -17,6 +17,10 @@
  *  <http://www.gnu.org/licenses/>.
  *
  */
+//
+// Modified by circulosmeos, to hack & play with the Mali450 of ODROID-C2
+// //github.com/circulosmeos/visualization.shadertoy
+//
 
 #include "xbmc_vis_dll.h"
 #if defined(HAS_GLES)
@@ -137,6 +141,7 @@ int g_activePreset = -1;
 char** lpresets = nullptr;
 bool randomise = false;
 bool newtrack = false;
+int timeMultiplier = 1;
 
 const char *g_fileTextures[] = {
   "tex00.png",
@@ -891,7 +896,13 @@ static void launch(int preset)
   bits_precision = determine_bits_precision();
   // mali-400 has only 10 bits which means milliseond timer wraps after ~1 second.
   // we'll fudge that up a bit as having a larger range is more important than ms accuracy
-  bits_precision = max(bits_precision, 13);
+  //
+  // ODROID-C2:
+  // max bits_precision raised from 13 up to 17, to rise the 8 seconds cycle limit (13 bits=8192 ms)
+  // at the cost of reducing precision. The setting timeMultiplier=(1|2|4|8|16) ranges from 13 to 17 bits.
+  //
+  //bits_precision = max(bits_precision, 13);
+  bits_precision = max(bits_precision, 13 + (int)log2f(timeMultiplier));
   printf("bits=%d\n", bits_precision);
 #endif
   
@@ -1303,6 +1314,21 @@ extern "C" ADDON_STATUS ADDON_SetSetting(const char *strSetting, const void* val
     cout << "randomise = " << randomise << endl;
     return ADDON_STATUS_OK;
   }
+  if (strcmp(strSetting, "timeMultiplier") == 0)
+  {
+    cout << "timeMultiplier = " << *((char *)value) << endl;
+    if (strcmp( (char *)value, "1" ) == 0)
+      timeMultiplier = 1;
+    if (strcmp( (char *)value, "2" ) == 0)
+      timeMultiplier = 2;
+    if (strcmp( (char *)value, "4" ) == 0)
+      timeMultiplier = 4;
+    if (strcmp( (char *)value, "8" ) == 0)
+      timeMultiplier = 8;
+    if (strcmp( (char *)value, "16" ) == 0)
+      timeMultiplier = 16;
+    return ADDON_STATUS_OK;
+  }
 
   return ADDON_STATUS_UNKNOWN;
 }
@@ -1315,3 +1341,4 @@ extern "C" void ADDON_Announce(const char *flag, const char *sender, const char 
 {
   cout << "ADDON_Announce " << flag << " " << sender << " " << message << std::endl;
 }
+  

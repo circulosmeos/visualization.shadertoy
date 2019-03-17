@@ -16,4 +16,10 @@ msgctxt "#30000"
 msgid "Randomise"
 msgstr ""
 
+msgctxt "#30010"
+msgid "hacking Mali450 (ODROID-C2)"
+msgstr ""
 
+msgctxt "#30020"
+msgid "Multiply time cycle (8 s) by:"
+msgstr ""
