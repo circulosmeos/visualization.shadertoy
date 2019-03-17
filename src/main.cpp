@@ -67,6 +67,8 @@ struct Preset {
   int channel[4];
 };
 
+int testingPresets = 4; // just to not select TEST vizs when randomly selecting presets
+
 #if defined(HAS_GLES)
 const std::vector<Preset> g_presets =
   {
@@ -78,6 +80,7 @@ const std::vector<Preset> g_presets =
    {"AudioSurf3 by 4rknova",                    "audiosurf3.frag.glsl",             99, -1, -1, -1},
    {"AudioVisual by Passion",                   "audiovisual.frag.glsl",            99, -1, -1, -1},
    {"Beating Circles by Phoenix72",             "beatingcircles.frag.glsl",         99, -1, -1, -1},
+   {"Beating Circles (based on Phoenix72)",     "beatingcircles2.frag.glsl",        99, -1, -1, -1},
    {"Circle Wave by TekF",                      "circlewave.frag.glsl",             99, -1, -1, -1},
    {"Circular by Mx7f",                         "circular.frag.glsl",               99, -1, -1, -1},
    {"Dancing Metalights by Danguafare",         "dancingmetalights.frag.glsl",      99, -1, -1, -1},
@@ -90,7 +93,7 @@ const std::vector<Preset> g_presets =
    {"LED spectrum by simesgreen",               "ledspectrum.frag.glsl",            99, -1, -1, -1},
    {"Metaballs by the23",                       "metaballs.frag.glsl",              99, -1, -1, -1},
    {"Polar Beats by sauj123",                   "polarbeats.frag.glsl",             99, -1, -1, -1},
-   {"Sine Waves by popcornmix",                 "sinewaves.frag.glsl",              99, -1, -1, -1},
+   {"Sine Waves by popcornmix",                 "sinuswave.frag.glsl",              99, -1, -1, -1},
    {"Sound Flower by iq",                       "soundflower.frag.glsl",            99, -1, -1, -1},
    {"Sound sinus wave (based on Eitraz)",       "soundsinuswave.frag.glsl",         99, -1, -1, -1},
    {"Sound sinus wave 2 (based on Eitraz)",     "soundsinuswave2.frag.glsl",        99, -1, -1, -1},
@@ -100,7 +103,11 @@ const std::vector<Preset> g_presets =
    {"Twisted Rings by poljere",                 "twistedrings.frag.glsl",           99, -1, -1, -1},
    {"Undulant Spectre by mafik",                "undulantspectre.frag.glsl",        99, -1, -1, -1},
    {"Voronoi distances by iq",                  "voronoidistances.frag.glsl",       99, -1, -1, -1},
-   {"Waves Remix by ADOB",                      "wavesremix.frag.glsl",             99, -1, -1, -1}
+   {"Waves Remix by ADOB",                      "wavesremix.frag.glsl",             99, -1, -1, -1},
+   {"TEST: Fractal Land by Kali",               "fractalland.frag.glsl",             2, 13, 99, -1},
+   {"TEST: Ribbons by XT95",                    "ribbons.frag.glsl",                99, -1, -1, -1},
+   {"TEST: SHAPE by mihu",                      "shape.frag.glsl",                  99, -1, -1, -1},
+   {"TEST: code in 'test.frag.glsl' file",      "test.frag.glsl",                   99, -1, -1, -1}
 };
 #else
 const std::vector<Preset> g_presets =
@@ -142,6 +149,7 @@ char** lpresets = nullptr;
 bool randomise = false;
 bool newtrack = false;
 int timeMultiplier = 1;
+bool showTestingPresets = false;
 
 const char *g_fileTextures[] = {
   "tex00.png",
@@ -773,7 +781,7 @@ extern "C" void Render()
 {
    if (newtrack && randomise)
      do {
-       g_activePreset = (int)((std::rand() / (float)RAND_MAX) * g_presets.size());
+       g_activePreset = (int)((std::rand() / (float)RAND_MAX) * ( g_presets.size() - (showTestingPresets?0:testingPresets) ));
      } while (g_activePreset == g_lastPreset);
    else if (newtrack)
      g_activePreset = g_currentPreset;
@@ -1057,7 +1065,7 @@ extern "C" bool OnAction(long flags, const void *param)
       break;
     case VIS_ACTION_RANDOM_PRESET:
       LogAction("VIS_ACTION_RANDOM_PRESET");
-      g_currentPreset = (int)((std::rand() / (float)RAND_MAX) * g_presets.size());
+      g_currentPreset = (int)((std::rand() / (float)RAND_MAX) * ( g_presets.size() - (showTestingPresets?0:testingPresets) ));
       return true;
 
     case VIS_ACTION_LOCK_PRESET:
@@ -1334,6 +1342,12 @@ extern "C" ADDON_STATUS ADDON_SetSetting(const char *strSetting, const void* val
       timeMultiplier = 16;
     return ADDON_STATUS_OK;
   }
+  if (strcmp(strSetting, "showTestingPresets") == 0)
+  {
+    showTestingPresets = (int) *(char *)value;
+    cout << "showTestingPresets = " << showTestingPresets << endl;
+    return ADDON_STATUS_OK;
+  }
 
   return ADDON_STATUS_UNKNOWN;
 }
@@ -1346,4 +1360,4 @@ extern "C" void ADDON_Announce(const char *flag, const char *sender, const char 
 {
   cout << "ADDON_Announce " << flag << " " << sender << " " << message << std::endl;
 }
-  
+

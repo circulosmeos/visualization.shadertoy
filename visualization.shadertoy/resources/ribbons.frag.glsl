@@ -4,7 +4,7 @@
 //-----------------------------------------------------------------------------
 // Utils
 //-----------------------------------------------------------------------------
-float t = iGlobalTime*.5;
+#define t (iGlobalTime*.5)
 
 vec3 rotateY(vec3 v, float x)
 {
@@ -61,9 +61,9 @@ float scene(vec3 p)
 {
 	float d = .5-abs(p.y);
 	d = min(d, ribbon1(p) );
-	d = min(d, ribbon2(p) );
+	//d = min(d, ribbon2(p) );
 	d = min(d, ribbon3(p) );
-	d = min(d, ribbon4(p) );
+	//d = min(d, ribbon4(p) );
 	
 	return d;
 }
@@ -131,9 +131,9 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 	
     color = vec4( max( dot(n.xy*-1.,normalize(p.xy-vec2(.0,-.1))),.0)*.01 );
 	color += vec4(1.0,0.3,0.0,1.0)/(ribbon1(p-n*.01)*20.+.75)*pow(bass,2.)*3.;
-	color += vec4(0.5,0.3,0.7,1.0)/(ribbon2(p-n*.01)*20.+.75)*pow(texture2D( iChannel0, vec2(64./256.,0.25) ).x,2.)*2.;
+	//color += vec4(0.5,0.3,0.7,1.0)/(ribbon2(p-n*.01)*20.+.75)*pow(texture2D( iChannel0, vec2(64./256.,0.25) ).x,2.)*2.;
 	color += vec4(0.0,0.5,1.0,1.0)/(ribbon3(p-n*.01)*20.+.75)*pow(texture2D( iChannel0, vec2(128./256.,0.25) ).x,2.)*5.;
-	color += vec4(0.0,1.0,0.2,1.0)/(ribbon4(p-n*.01)*20.+.75)*pow(texture2D( iChannel0, vec2(200./256.,0.25) ).x,2.)*5.;
+	//color += vec4(0.0,1.0,0.2,1.0)/(ribbon4(p-n*.01)*20.+.75)*pow(texture2D( iChannel0, vec2(200./256.,0.25) ).x,2.)*5.;
 	color *= AO(p,n);
 	color = mix(color,vec4(0.),vec4((min(distance(org,p)*.05,1.0))));
 	

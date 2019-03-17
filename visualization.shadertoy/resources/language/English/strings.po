@@ -23,3 +23,8 @@ msgstr ""
 msgctxt "#30020"
 msgid "Multiply time cycle (8 s) by:"
 msgstr ""
+
+msgctxt "#30030"
+msgid "Show TEST visualizations in random mode"
+msgstr ""
+
