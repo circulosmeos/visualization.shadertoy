@@ -9,7 +9,9 @@
     library_@PLATFORM@="@LIBRARY_FILENAME@"/>
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Visualisations from Shadertoy</summary>
-    <description lang="en">Visualisations from Shadertoy. This is a crafted version for ODROID-C2 devices (arm64, GLESv2).</description>
+    <description lang="en">Visualisations from Shadertoy.[CR]This is a crafted version for ODROID-C2 devices (arm64, GLESv2).</description>
+    <description lang="es">Visualizaciones de Shadertoy.[CR]Esta es una versión preparada para dispositivos ODROID-C2 (arm64, GLESv2).</description>
     <platform>@PLATFORM@</platform>
+    <source>https://github.com/circulosmeos/visualization.shadertoy</source>
   </extension>
 </addon>
