@@ -1,6 +1,6 @@
-{ "presets":[
+{ "shadertoy presets v2":[
 [ "2D LED Spectrum by un1versal",             "2Dspectrum.frag.glsl",             99, -1, -1, -1 ],
-[ "Alhambra on LSD by mfagerlund",            "alhambra.frag.glsl",               99, -1, -1, -1 ],
+[ "Alhambra on LSD by mfagerlund",            "alhambra.frag.glsl",               99, -1, -1, -1, 16 ],
 [ "Audio Fl0wer by daek",                     "audioflower.frag.glsl",            99, -1, -1, -1 ],
 [ "Audio Eclipse by airtight",                "audioeclipse.frag.glsl",           99, -1, -1, -1 ],
 [ "Audio Reaktive by choard1895",             "audioreaktive.frag.glsl",          99, -1, -1, -1 ],
@@ -28,11 +28,10 @@
 [ "Spectrometer by jaba",                     "spectrometer.frag.glsl",           99, -1, -1, -1 ],
 [ "Symmetrical sound visualiser by thelinked","symmetricalsound.frag.glsl",       99, -1, -1, -1 ],
 [ "Twisted Rings by poljere",                 "twistedrings.frag.glsl",           99, -1, -1, -1 ],
-[ "Undulant Spectre by mafik",                "undulantspectre.frag.glsl",        99, -1, -1, -1 ],
-[ "Voronoi distances by iq",                  "voronoidistances.frag.glsl",       99, -1, -1, -1 ],
+[ "Undulant Spectre by mafik",                "undulantspectre.frag.glsl",        99, -1, -1, -1, 16 ],
+[ "Voronoi distances by iq",                  "voronoidistances.frag.glsl",       99, -1, -1, -1, 16 ],
 [ "Waves Remix by ADOB",                      "wavesremix.frag.glsl",             99, -1, -1, -1 ],
-[ "TEST: Fractal Land by Kali",               "fractalland.frag.glsl",             2, 13, 99, -1, "Put 'TEST:' shaders AT THE END" ],
-[ "TEST: Ribbons by XT95",                    "ribbons.frag.glsl",                99, -1, -1, -1 ],
-[ "TEST: SHAPE by mihu",                      "shape.frag.glsl",                  99, -1, -1, -1, "set time multiplier to 16x" ],
-[ "TEST: code in 'test.frag.glsl' file",      "test.frag.glsl",                   99, -1, -1, -1 ]
+[ "TEST: Fractal Land by Kali",               "fractalland.frag.glsl",             2, 13, 99, -1, 4, "Put 'TEST:' shaders AT THE END" ],
+[ "TEST: Ribbons by XT95",                    "ribbons.frag.glsl",                99, -1, -1, -1, 16 ],
+[ "TEST: SHAPE by mihu",                      "shape.frag.glsl",                  99, -1, -1, -1, 16 ]
 ]}

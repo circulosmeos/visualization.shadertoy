@@ -68,6 +68,7 @@ struct Preset {
   std::string name;
   std::string file;
   int channel[4];
+  int timeMultiplier;
 };
 
 int testingPresets = 0; // just to not select TEST vizs when randomly selecting presets
@@ -623,8 +624,35 @@ static void RenderTo(GLuint shader, GLuint effect_fb)
       w = state->fbwidth, h = state->fbheight;
 #endif
     int64_t intt = P8PLATFORM::GetTimeMs() - initial_time;
-    if (bits_precision)
-      intt &= (1<<bits_precision)-1;
+    if (bits_precision) {
+      //
+      // ODROID-C2:
+      // max bits_precision raised from 13 up to 17, to rise the 8 seconds cycle limit (13 bits=8192 ms)
+      // at the cost of reducing precision. The setting timeMultiplier=(1|2|4|8|16) ranges from 13 to 17 bits.
+      // If setting timeMultiplier is 0, the multiplier is used from each shader's conf in json file.
+      //
+      int mask = bits_precision;
+      int localTimeMultiplier =
+        (timeMultiplier==0)? (g_presets[g_activePreset].timeMultiplier): timeMultiplier;
+      switch (localTimeMultiplier) { // switch to not use (int)log2f each time RenderTo() is called
+        case 1:
+          // 1x speed
+          break;
+        case 2:
+          mask+=1;
+          break;
+        case 4:
+          mask+=2;
+          break;
+        case 8:
+          mask+=3;
+          break;
+        case 16:
+          mask+=4;
+          break;
+      }
+      intt &= (1<<( mask ))-1;
+    }
 
     if (needsUpload) {
       for (int i=0; i<4; i++) {
@@ -844,13 +872,7 @@ static void launch(int preset)
   bits_precision = determine_bits_precision();
   // mali-400 has only 10 bits which means milliseond timer wraps after ~1 second.
   // we'll fudge that up a bit as having a larger range is more important than ms accuracy
-  //
-  // ODROID-C2:
-  // max bits_precision raised from 13 up to 17, to rise the 8 seconds cycle limit (13 bits=8192 ms)
-  // at the cost of reducing precision. The setting timeMultiplier=(1|2|4|8|16) ranges from 13 to 17 bits.
-  //
-  //bits_precision = max(bits_precision, 13);
-  bits_precision = max(bits_precision, 13 + (int)log2f(timeMultiplier));
+  bits_precision = max(bits_precision, 13);
   printf("bits=%d\n", bits_precision);
 #endif
   
@@ -1133,11 +1155,12 @@ ADDON_STATUS ADDON_Create(void* hdl, void* props)
           nPreset = 0;
           for ( i = 3; i < nTokens; i++ ) {
             if ( tokens[i].type == JSMN_ARRAY && // [description, file, iChannel0..4]
-                 tokens[i].size >= 6 ) { // elements over 6 will be ignored, but don't stop the loading
+                 tokens[i].size >= 6 ) { // elements over 7 will be ignored, but don't stop the loading
+                                         // (7th element, timeMultiplier, is optional (default = 1))
               try {
 
                 // check that data is as expected
-                for ( j=i+1; j<=i+6; j++) {
+                for ( j = i + 1; j <= ( i + min(7, tokens[i].size) ); j++) {
                   // length of each field between 1 and 41 chars (Unicode will be shorter...)
                   if ( ( tokens[j].end - tokens[j].start < 1  ) ||
                        ( tokens[j].end - tokens[j].start > 41 ) )
@@ -1157,6 +1180,16 @@ ADDON_STATUS ADDON_Create(void* hdl, void* props)
                 g_presets[nPreset].channel[1] = (int)strtol( chunk( JSON_STRING.c_str(), &tokens[i+4] ), NULL, 0 );
                 g_presets[nPreset].channel[2] = (int)strtol( chunk( JSON_STRING.c_str(), &tokens[i+5] ), NULL, 0 );
                 g_presets[nPreset].channel[3] = (int)strtol( chunk( JSON_STRING.c_str(), &tokens[i+6] ), NULL, 0 );
+                g_presets[nPreset].timeMultiplier = 1;
+                if ( tokens[i].size > 6 ) {
+                  g_presets[nPreset].timeMultiplier = (int)strtol( chunk( JSON_STRING.c_str(), &tokens[i+7] ), NULL, 0 );
+                  if ( g_presets[nPreset].timeMultiplier != 1 && g_presets[nPreset].timeMultiplier != 2 && 
+                       g_presets[nPreset].timeMultiplier != 4 && g_presets[nPreset].timeMultiplier != 8 &&
+                       g_presets[nPreset].timeMultiplier != 16 ) {
+                    g_presets[nPreset].timeMultiplier = 1;
+                  }
+                }
+
 
               } catch (...) {
                 cerr << "Incorrect data in json file while reading shader #" << (nPreset+1) << endl;
@@ -1365,6 +1398,8 @@ extern "C" ADDON_STATUS ADDON_SetSetting(const char *strSetting, const void* val
   if (strcmp(strSetting, "timeMultiplier") == 0)
   {
     cout << "timeMultiplier = " << *((char *)value) << endl;
+    if (strcmp( (char *)value, "-" ) == 0)
+      timeMultiplier = 0; // the time multiplier indicated in each shader's conf in json file will be used
     if (strcmp( (char *)value, "1" ) == 0)
       timeMultiplier = 1;
     if (strcmp( (char *)value, "2" ) == 0)

@@ -7,5 +7,5 @@
     <setting id="showTestingPresets" label="30030" type="bool" default="false" />
     <setting type="sep" />
     <setting label="30010" type="lsep" />
-    <setting id="timeMultiplier" label="30020" type="select" values="1|2|4|8|16" default="1" />
+    <setting id="timeMultiplier" label="30020" type="select" values="-|1|2|4|8|16" default="-" />
 </settings>
