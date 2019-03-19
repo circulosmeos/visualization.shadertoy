@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <addon
   id="visualization.shadertoy"
-  version="1.1.6"
+  version="3.14"
   name="Shadertoy"
   provider-name="circulosmeos, based on Team-Kodi and popcornmix repos">
   <extension
@@ -13,5 +13,6 @@
     <description lang="es">Visualizaciones de Shadertoy.[CR]Esta es una versión preparada para dispositivos ODROID-C2 (arm64, GLESv2).</description>
     <platform>@PLATFORM@</platform>
     <source>https://github.com/circulosmeos/visualization.shadertoy</source>
+    <news>time multiplier for Mali450, shaders read from json file, more shaders!</news>
   </extension>
 </addon>

@@ -18,9 +18,10 @@
 [ "Gameboy by iq",                            "gameboy.frag.glsl",                99, -1, -1, -1 ],
 [ "Input Sound by iq",                        "input.frag.glsl",                  99, -1, -1, -1 ],
 [ "LED spectrum by simesgreen",               "ledspectrum.frag.glsl",            99, -1, -1, -1 ],
-[ "Metaballs by the23",                       "metaballs.frag.glsl",              99, -1, -1, -1 ],
+[ "Metaballs by the23",                       "metaballs.frag.glsl",              99, -1, -1, -1, 16 ],
 [ "Polar Beats by sauj123",                   "polarbeats.frag.glsl",             99, -1, -1, -1 ],
-[ "Sine Waves by popcornmix",                 "sinuswave.frag.glsl",              99, -1, -1, -1 ],
+[ "SHAPE by mihu",                            "shape.frag.glsl",                  99, -1, -1, -1, 16 ],
+[ "Sine Waves by popcornmix",                 "sinuswave.frag.glsl",              99, -1, -1, -1, 4 ],
 [ "Sound Flower by iq",                       "soundflower.frag.glsl",            99, -1, -1, -1 ],
 [ "Sound sinus wave (based on Eitraz)",       "soundsinuswave.frag.glsl",         99, -1, -1, -1 ],
 [ "Sound sinus wave 2 (based on Eitraz)",     "soundsinuswave2.frag.glsl",        99, -1, -1, -1 ],
@@ -32,6 +33,5 @@
 [ "Voronoi distances by iq",                  "voronoidistances.frag.glsl",       99, -1, -1, -1, 16 ],
 [ "Waves Remix by ADOB",                      "wavesremix.frag.glsl",             99, -1, -1, -1 ],
 [ "TEST: Fractal Land by Kali",               "fractalland.frag.glsl",             2, 13, 99, -1, 4, "Put 'TEST:' shaders AT THE END" ],
-[ "TEST: Ribbons by XT95",                    "ribbons.frag.glsl",                99, -1, -1, -1, 16 ],
-[ "TEST: SHAPE by mihu",                      "shape.frag.glsl",                  99, -1, -1, -1, 16 ]
+[ "TEST: Ribbons by XT95",                    "ribbons.frag.glsl",                99, -1, -1, -1, 16 ]
 ]}
