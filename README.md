@@ -2,17 +2,21 @@
 
 This is a [Kodi](http://kodi.tv) visualization addon.
 
-**WARNING**: This addon has been compiled for **[ODROID-C2 devices](https://www.hardkernel.com/shop/odroid-c2/)** with odroid's Ubuntu 16.04 packaged **Kodi v17.6**.
-
-**WARNING**: Do not install on devices different from ODROID-C2 unless you know that the hardware is compatible (linux arm64, [GLESv2](https://en.wikipedia.org/wiki/OpenGL_ES)).
+You can either install this version for ODROID-C2 with Kodi 17, or compile yourself for other platforms that has Kodi 17 installed (see [Build instructions](https://github.com/circulosmeos/visualization.shadertoy#build-instructions)).
 
 Not tested on versions different from Kodi v17.6.
 
 ## Motivation
 
-Installed addons in Kodi 17 packages for ODROID-C2 do not contain any visualization addon that shows something on screen. They've been compiled against OpenGL libraries, but in ODROID-C2 only [OpenGLESv2](https://en.wikipedia.org/wiki/OpenGL_ES) libraries use the Mali Graphics Processor, and the addon cmake ignore GLESv2 if GL is found.
+Installed addons in Kodi 17 packages for ODROID-C2 do not contain any visualization addon that shows something on screen. They've been compiled against OpenGL libraries, but in ODROID-C2 only [OpenGLESv2](https://en.wikipedia.org/wiki/OpenGL_ES) libraries use the Mali Graphics Processor, and the addon cmake ignored GLESv2 if GL is found.
 
 ## Installation
+
+**WARNING**: This addon has been compiled for **[ODROID-C2 devices](https://www.hardkernel.com/shop/odroid-c2/)** with odroid's Ubuntu 16.04 packaged **Kodi v17.6**.
+
+**WARNING**: Do not install on devices different from ODROID-C2 unless you know that the hardware is compatible (linux arm64, [GLESv2](https://en.wikipedia.org/wiki/OpenGL_ES)).
+
+Not tested on versions different from Kodi v17.6.
 
 * Download the zip file *[visualization.shadertoy-3.14.zip](https://github.com/circulosmeos/visualization.shadertoy/releases/download/v3.14/visualization.shadertoy-3.14.zip)* to your ODROID-C2 device
 * Install from your Kodi: `Addons > box icon on top left corner > Install from zip file`
