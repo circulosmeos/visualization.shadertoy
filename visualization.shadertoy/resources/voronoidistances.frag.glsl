@@ -18,10 +18,10 @@
 vec2 hash2( vec2 p )
 {
 	// texture based white noise
-	return texture2DLodEXT( iChannel0, (p+0.5)/256.0, 0.0 ).xy;
+	return texture2DLodEXT( iChannel0, (p+0.1)/25.6, 0.1 ).xy; // circulosmeos: numbers adjusted
 	
     // procedural white noise	
-	//return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453);
+	//return fract(sin(vec2(dot(p,vec2(1.271,3.117)),dot(p,vec2(2.695,1.833))))*1.85453);
 }
 
 vec3 voronoi( in vec2 x )

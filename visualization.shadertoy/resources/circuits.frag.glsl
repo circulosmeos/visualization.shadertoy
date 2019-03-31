@@ -4,10 +4,10 @@
 
 
 #define width .005
-static float zoom = .18;
+float zoom = .18;
 
-static float shape=0.;
-static vec3 color=vec3(0.,0.,0.),randcol;
+float shape=0.;
+vec3 color=vec3(0.,0.,0.),randcol;
 
 void formula(vec2 z, float c) {
 	float minit=0.;

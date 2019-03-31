@@ -24,8 +24,8 @@
 #define SATURATION .65
 
 
-#define detail .001
-#define t iGlobalTime*.5
+#define detail .004
+#define t iGlobalTime*.2
 
 
 const vec3 origin=vec3(-1.,.7,0.);

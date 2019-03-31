@@ -1,6 +1,8 @@
-//https://www.shadertoy.com/view/lss3R7
+// https://www.shadertoy.com/view/XdfGDn
 
-const float timeEffect=2.0;
+#define iTime iGlobalTime
+
+const float timeEffect=0.0;
 
 //-----------------------------------------------------------------------------
 // Maths utils
@@ -40,18 +42,18 @@ float fbm( vec3 p )
 
 vec2 noise2(vec2 p)
 {
-	return
+	return 
 		vec2(
-			noise(vec3(p, 1.9+sin(iGlobalTime*0.8)*1.3)),
-			noise(vec3(p, -1.2+sin(iGlobalTime*1.2)*1.0)));
+			noise(vec3(p, 1.9+sin(iTime*0.8)*1.3)), 
+			noise(vec3(p, -1.2+sin(iTime*1.2)*1.0)));
 }
 
 vec2 noise2(vec2 p, float fudge)
 {
-	return
+	return 
 		vec2(
-			noise(vec3(p, fudge+sin(iGlobalTime*0.8)*1.3)),
-			noise(vec3(p, -fudge+sin(iGlobalTime*1.2)*1.0)));
+			noise(vec3(p, fudge+sin(iTime*0.8)*1.3)), 
+			noise(vec3(p, -fudge+sin(iTime*1.2)*1.0)));
 }
 
 
@@ -63,7 +65,7 @@ float triangleWave(float value)
 
 vec4 triangleWave(vec4 col)
 {
-	return
+	return 
 		vec4(
 			triangleWave(col.x),
 			triangleWave(col.y),
@@ -73,7 +75,7 @@ vec4 triangleWave(vec4 col)
 
 // Mattias' drawing functions ( http://sociart.net/ )
 // Terminals
-vec4 simplex_color(vec2 p)
+vec4 simplex_color(vec2 p) 
 {
 	const float offset=12.0;
 	const float zoom = 2.45;
@@ -84,23 +86,23 @@ vec4 simplex_color(vec2 p)
 		fbm(vec3(x,y, offset*1.25)),
 		fbm(vec3(x,y, offset*2.33)),
 		fbm(vec3(x,y, offset*3.66)));
-
+	
 	return (col-0.5)*1.5;
 }
 
-vec4 bw_noise(vec2 p)
+vec4 bw_noise(vec2 p, float off) 
 {
 	p *= 1.5;
-	float val =
-		(noise(vec3(p.x*2.2+sin(iGlobalTime*0.6+0.23)*0.22, p.y*2.2, 1.4+sin(iGlobalTime)*0.22))*0.66+
-		noise(vec3(p.x*3.2, p.y*3.2+sin(iGlobalTime*1.2-0.3)*0.36, 4.3+sin(iGlobalTime*1.1+1.5*0.12)))*0.33)*2.0;
-
+	float val = 
+		(noise(vec3(p.x*2.2+(off*0.6+0.23)*0.22, p.y*2.2, 1.4+off*0.22))*0.66+
+		noise(vec3(p.x*3.2, p.y*3.2+(off*1.2-0.3)*0.36, 4.3+(off*1.1+1.5*0.12)))*0.33)*2.0;
+	
 	return vec4(val);
 }
 
 float ridged( vec3 p )
 {
-   	float f = abs(noise(p));
+   	float f = abs(noise(p));				  
 	f += abs(0.5000*noise( p )); p = m*p*2.02;
 	f += abs(0.2500*noise( p )); p = m*p*2.03;
 	f += abs(0.1250*noise( p ));
@@ -117,18 +119,40 @@ vec4 ridged_color(vec2 p)
 		1.0-ridged(vec3(x,y, offset*2.0)),
 		1.0-ridged(vec3(x,y, offset*3.0)),
 		1.0-ridged(vec3(x,y, offset*4.0)));
-
+	
 	return col-0.55;
 }
 
-vec4 y(vec2 p)
+vec4 ridged_bw(vec2 p)
 {
+	const float offset=0.2;
+	float x = p.x*2.5;
+	float y = p.y*2.5;
+	float f= 1.0-ridged(vec3(x,y, offset));
+	vec4 col= vec4(f);
+	
+	return col-0.35;
+}
+
+vec4 ridged_bw(vec2 p, float off)
+{
+	const float offset=0.2;
+	float x = p.x*2.5;
+	float y = p.y*2.5;
+	float f= 1.0-ridged(vec3(x,y, offset*off));
+	vec4 col= vec4(f);
+	
+	return col-0.35;
+}
+
+vec4 y(vec2 p)
+{	
 	float val=triangleWave(p.y);
 	return vec4(val, val, val, val);
 }
 
 vec4 x(vec2 p)
-{
+{	
 	float val=triangleWave(p.x);
 	return vec4(val, val, val, val);
 }
@@ -147,7 +171,7 @@ vec2 zoom2(vec2 a, vec4 b)
 // Functions
 vec4 dist(vec2 pos)
 {
-	float d = triangleWave(length(pos));
+	float d = triangleWave(length(pos));	
 	return vec4(d, d, d, d);
 }
 
@@ -178,6 +202,15 @@ vec4 add(vec4 a, vec4 b)
 	return triangleWave(a+b);
 }
 
+vec4 sub(vec4 a, vec4 b)
+{
+	return a-b;
+}
+
+vec4 mul(vec4 a, vec4 b)
+{
+	return triangleWave(a*b);
+}
 
 // Warpers
 vec2 julia(vec2 p)
@@ -207,7 +240,7 @@ vec2 zoom(vec2 pos, vec4 arg)
 	float zoomFactor = (arg.x+arg.y+arg.z+arg.w)*0.25;
 	return pos * zoomFactor;
 }
-
+	
 vec2 zoomin(vec2 p)
 {
 	return p*piDiv;
@@ -220,7 +253,7 @@ vec2 zoomout(vec2 p)
 
 vec2 swirl(vec2 p)
 {
-	float swirlFactor = 3.0+timeEffect*(sin(iGlobalTime+0.22)-1.5);
+	float swirlFactor = 3.0+timeEffect*(sin(iTime+0.22)-1.5);
 	float radius = length(p);
 	float angle = atan(p.y, p.x);
 	float inner = angle-cos(radius*swirlFactor);
@@ -234,14 +267,30 @@ vec2 horseShoe(vec2 p)
 	return vec2(radius * cos(angle), radius*sin(angle));
 }
 
+vec2 kaleidoscope(vec2 p)
+{
+	float zoomFactor = 1.5;
+	float repeatFactor = 3.0;
+	float radius = triangleWave(length (p)*zoomFactor);
+	float angle = atan(p.y, p.x)*repeatFactor;
+	return vec2(radius * cos(angle), radius*sin(angle));
+}
+
+
 vec2 wrap(vec2 p)
 {
-	float zoomFactor = 1.5-timeEffect*(sin(iGlobalTime+0.36));
+	float zoomFactor = 1.5-timeEffect*(sin(iTime+0.36));
 	float repeatFactor = 3.0;
 	float radius = length(p)*zoomFactor;
 	float angle = atan(p.y, p.x)*repeatFactor;
 	return vec2(radius * cos(angle), radius*sin(angle));
 }
+
+vec2 mirror(vec2 p)
+{
+	return vec2(abs(p.x), p.y);
+}
+	
 
 vec2 array(vec2 p)
 {
@@ -252,16 +301,16 @@ vec2 array(vec2 p)
 vec2 pan_rotate_zoom(vec2 pos, vec4 val)
 {
 	vec2 pan = vec2(val.w, val.x);
-	float angle= pi*val.y+timeEffect*(sin(iGlobalTime+1.2)-1.0);
+	float angle= pi*val.y+timeEffect*(sin(iTime+1.2)-1.0);
 	float zoom = val.z;
-
+	
 	float sinAngle = sin(angle);
 	float cosAngle = cos(angle);
-
+	
 	// Pan
 	vec2 next = pos+pan;
 	// Rotate
-	next =
+	next = 
 		vec2(
 			cosAngle*next.x-sinAngle*next.y,
 			sinAngle*next.x+cosAngle*next.y);
@@ -276,9 +325,9 @@ vec4 blend(vec4 a, vec4 b, vec4 c)
 	blend = clamp(blend, 0.0, 1.0);
 	return mix(b,c,blend);
 }
+	
 
-
-vec2 rotate(vec2 pos, vec4 rotation)
+vec2 rotate(vec2 pos, vec4 rotation)	
 {
 	float simpleSum = rotation.x + rotation.y + rotation.z + rotation.w;
 	float angle = pi * simpleSum * 0.25;
@@ -290,7 +339,8 @@ vec2 rotate(vec2 pos, vec4 rotation)
 			sinAngle * pos.x + cosAngle * pos.y);
 }
 
-vec2 rotate(vec2 pos, float angle)
+
+vec2 rotate(vec2 pos, float angle)	
 {
 	angle = pi * angle;
 	float sinAngle = sin(angle);
@@ -301,27 +351,56 @@ vec2 rotate(vec2 pos, float angle)
 			sinAngle * pos.x + cosAngle * pos.y);
 }
 
-/* (max
-  (horseshoe
-    (ror
-      (ror
-        (array
-          (wrap y))))) [-0.022,-0.115,0.553,0.406]) */
+vec2 pan(vec2 pos, vec4 col)
+{
+	return pos+col.xy;
+}
+
+vec2 rotateAndMove(vec2 pos, float angle)	
+{
+	angle = pi * angle;
+	float sinAngle = sin(angle);
+	float cosAngle = cos(angle);
+	return
+		vec2(
+			cosAngle * pos.x - sinAngle * pos.y + angle*0.02,
+			sinAngle * pos.x + cosAngle * pos.y + angle*0.02);
+}
+
+vec4 decolorize(vec4 color, float amount)
+{
+	float bw = (color.x + color.y + color.z)*0.333;	
+	return mix(color, vec4(bw), amount);
+}
+
+/* 
+(min
+  (zoomout
+    (neg
+      (array dist)))
+  (abs
+    (rol noise)))
+
+*/
 
 vec4 imageFunction(vec2 pos)
 {
-	float p0 = texture2D( iChannel0, vec2(0.4,0.0) ).x;
-	float p1 = texture2D( iChannel0, vec2(0.5,0.0) ).x;
-	float p2 = texture2D( iChannel0, vec2(0.6,0.0) ).x;
-	float p3 = texture2D( iChannel0, vec2(0.7,0.0) ).x;
-	float p4 = texture2D( iChannel0, vec2(1.0,0.0) ).x;
+	/*float p0 = texture( iChannel0, vec2(0.4,0.0) ).x;
+	float p1 = texture( iChannel0, vec2(0.5,0.0) ).x;
+	float p2 = texture( iChannel0, vec2(0.6,0.0) ).x;
+	float p3 = texture( iChannel0, vec2(0.7,0.0) ).x * 0.0;
+	float p4 = texture( iChannel0, vec2(1.0,0.0) ).x * 0.0;*/
+		
+	vec2 origPos = pos;
+	
+	pos = pos * (1.0 + sin(iTime*0.05+length(origPos))*0.15);
 
-	vec2 hs=horseShoe(pos);
-	pos = wrap(rotate(array(hs)*p2, p4*0.2+iGlobalTime*0.05));
-	return
-		add(
-		 y(rotate(pos, p1)),
-		 x_y_ang_dist(rotate(hs, p0*0.2+iGlobalTime*0.1)));
+	pos = rotate(pos, sin(iTime*0.05));
+	pos = pos * 0.8;
+	vec2 p = array(zoomout(pos));
+	vec4 circles = -dist(p)+0.3;
+	vec4 pattern = abs(triangleWave(simplex_color(rotate(pos+iTime*0.005, iTime*0.1))));	
+	return minf(circles, pattern);
 }
 
 // RENDER
@@ -329,11 +408,10 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
 	vec2 q = fragCoord.xy / iResolution.xy;
     vec2 pos = -1.0 + 2.0*q;
-    pos.x *= iResolution.x/ iResolution.y;
-	vec4 res = imageFunction(pos);
+    pos.x *= iResolution.x/ iResolution.y;	
 	vec4 color = imageFunction(pos);
 	color = (color+1.0)*0.5;
-	color = ror(color);
+	color = ror(color);	
 	color.w=1.0;
-	fragColor = color;
+	fragColor = color;		
 }
