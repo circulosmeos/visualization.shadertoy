@@ -2,7 +2,7 @@
 
 This is a [Kodi](http://kodi.tv) visualization addon.
 
-You can either install this version for ODROID-C2 with Kodi 17, or compile yourself for other platforms that has Kodi 17 installed (see [Build instructions](https://github.com/circulosmeos/visualization.shadertoy#build-instructions)).
+You can either install this version for [ODROID-C2](https://www.hardkernel.com/shop/odroid-c2/) with Kodi 17, or compile yourself for other platforms that has Kodi 17 installed (see [Build instructions](https://github.com/circulosmeos/visualization.shadertoy#build-instructions)).
 
 Not tested on versions different from Kodi v17.6.
 
@@ -10,22 +10,31 @@ Not tested on versions different from Kodi v17.6.
 
 Installed addons in Kodi 17 packages for ODROID-C2 do not contain any visualization addon that shows something on screen. They've been compiled against OpenGL libraries, but in ODROID-C2 only [OpenGLESv2](https://en.wikipedia.org/wiki/OpenGL_ES) libraries use the Mali Graphics Processor, and the addon cmake ignored GLESv2 if GL is found.
 
-## Installation
+## Installation of the zip file addon
 
 **WARNING**: This addon has been compiled for **[ODROID-C2 devices](https://www.hardkernel.com/shop/odroid-c2/)** with odroid's Ubuntu 16.04 packaged **Kodi v17.6**.
 
-**WARNING**: Do not install on devices different from ODROID-C2 unless you know that the hardware is compatible (linux arm64, [GLESv2](https://en.wikipedia.org/wiki/OpenGL_ES)).
+**WARNING**: Do not install the zip file addon on devices different from ODROID-C2 unless you know that the hardware is compatible (linux arm64, [GLESv2](https://en.wikipedia.org/wiki/OpenGL_ES)). Nonetheless, you can compile it to produce your own zip file addon: see the [Build instructions](https://github.com/circulosmeos/visualization.shadertoy#build-instructions)).
 
 Not tested on versions different from Kodi v17.6.
 
 * Download the zip file *[visualization.shadertoy-3.14.zip](https://github.com/circulosmeos/visualization.shadertoy/releases/download/v3.14/visualization.shadertoy-3.14.zip)* to your ODROID-C2 device
 * Install from your Kodi: `Addons > box icon on top left corner > Install from zip file`
 
+## shaders (visualizations)
+
+More than 50 new shaders (visualizations) have been tested (and modified when needed) to run under the GPU Mali450 (ODROID-C2).   
+Shaders can be easily added, removed or renamed modifying the json file `.kodi/addons/visualization.shadertoy/resources/presets_GLES.json`. If you are not using GLESv2, you must modify the file `presets.json` instead.
+
+Please, note that filename or shader's name cannot exceed 41 chars.   
+
+You can **search for, compile and test new shaders at [shadertoy.com](https://www.shadertoy.com)** - please, note that your browser will use your PC's GPU capabilities, so if you're gonna use the shader file on another hardware like [ODROID-C2](https://www.hardkernel.com/shop/odroid-c2/) or [RPi](https://www.raspberrypi.org/products/), you have to later test it there: [GLESv2](https://en.wikipedia.org/wiki/OpenGL_ES) and GPU's hardware will impose serious computation and language restrictions: take a look at your GPU capabilities and see this [quick reference to GLESv2](https://www.khronos.org/opengles/sdk/docs/reference_cards/OpenGL-ES-2_0-Reference-card.pdf) to start.
+
 ## Changes from original addon
 
 This addon is forked from [v1.1.5 xbmc/visualization.shadertoy](https://github.com/xbmc/visualization.shadertoy/tree/v1.1.5), with additional commits from [popcornmix](https://github.com/popcornmix/visualization.shadertoy) like fixes and the **Randomise mode**.
 
-Now new shaders can be easily added, removed or renamed using the json file `.kodi/addons/visualization.shadertoy/resources/presets_GLES.json`.
+Now new shaders can be easily added, removed or renamed modifying the json file `.kodi/addons/visualization.shadertoy/resources/presets_GLES.json`.
 
 There's a problem with the time precision of Mali450 (13 bits!) that limited time duration of animations to 8 seconds before being restarted. Now there's a setting to raise that limit from 2x to 16x. As the time evolves, the animation can degrade in some shaders, but for shaders like [SHAPE](https://www.shadertoy.com/view/Mtl3WH) the multiplier runs smoothly. The time multiplier can also be set per shader in the json conf file as seventh parameter (by default is 1x, overriden by the global setting, if set).
 
