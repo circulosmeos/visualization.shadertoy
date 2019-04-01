@@ -14,7 +14,7 @@ Installed addons in Kodi 17 packages for ODROID-C2 do not contain any visualizat
 
 **WARNING**: This addon has been compiled for **[ODROID-C2 devices](https://www.hardkernel.com/shop/odroid-c2/)** with odroid's Ubuntu 16.04 packaged **Kodi v17.6**.
 
-**WARNING**: Do not install the zip file addon on devices different from ODROID-C2 unless you know that the hardware is compatible (linux arm64, [GLESv2](https://en.wikipedia.org/wiki/OpenGL_ES)). Nonetheless, you can compile it to produce your own zip file addon: see the [Build instructions](https://github.com/circulosmeos/visualization.shadertoy#build-instructions)).
+**WARNING**: Do not install the zip file addon on devices different from ODROID-C2 unless you know that the hardware is compatible (linux arm64, [GLESv2](https://en.wikipedia.org/wiki/OpenGL_ES)). Nonetheless, you can compile it to produce your own zip file addon: see the [Build instructions](https://github.com/circulosmeos/visualization.shadertoy#build-instructions).
 
 Not tested on versions different from Kodi v17.6.
 
@@ -24,6 +24,9 @@ Not tested on versions different from Kodi v17.6.
 ## shaders (visualizations)
 
 More than 50 new shaders (visualizations) have been tested (and modified when needed) to run under the GPU Mali450 (ODROID-C2).   
+
+See a [complete list of included shaders here](https://github.com/circulosmeos/visualization.shadertoy/wiki), including thumbnails in most cases!
+
 Shaders can be easily added, removed or renamed modifying the json file `.kodi/addons/visualization.shadertoy/resources/presets_GLES.json`. If you are not using GLESv2, you must modify the file `presets.json` instead.
 
 Please, note that filename or shader's name cannot exceed 41 chars.   
@@ -56,4 +59,4 @@ OpenGLESv2 function `texture2DLodEXT` has been added to main.cpp with `#extensio
 8. `zip -r --symlinks visualization.shadertoy-3.14.zip visualization.shadertoy/`
 9. `cp visualization.shadertoy-3.14.zip /home/odroid/`
 
-Now you can install the zip *[visualization.shadertoy-3.14.zip](https://github.com/circulosmeos/visualization.shadertoy/releases/download/v3.14/visualization.shadertoy-3.14.zip)* from your Kodi.
+Now you can install the newly generated zip file *visualization.shadertoy-3.14.zip* from your Kodi.

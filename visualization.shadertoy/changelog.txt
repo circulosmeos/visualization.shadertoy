@@ -1,10 +1,16 @@
+[B]3.14[/B]
+
+- more than 50 new shaders!
+- shaders read from json file
+- time multiplier for Mali400 can be per shader in json file
+
 [B]1.1.6[/B]
 
 - Based on official v1.1.5 (Kodi 17)
 - Retouched shaders for ODROID-C2 compatibility
 - merge radomize mode from popcornmix
 - merge commits from popcornmix not pushed to xbmc
-- fixed cmake for ODROID-C2 compatibility
+- fixed cmake for GLESv2 compatibility
 
 [B]1.0.6[/B]
 
