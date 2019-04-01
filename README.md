@@ -60,3 +60,28 @@ OpenGLESv2 function `texture2DLodEXT` has been added to main.cpp with `#extensio
 9. `cp visualization.shadertoy-3.14.zip /home/odroid/`
 
 Now you can install the newly generated zip file *visualization.shadertoy-3.14.zip* from your Kodi.
+
+## License
+
+This project uses code from [jsmn JSON parser](https://github.com/zserge/jsmn) by zserge, under [MIT license](https://github.com/zserge/jsmn/blob/master/LICENSE):
+	Copyright (c) 2010 Serge A. Zaitsev
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+
+The rest, following the "GPL v2 or later" indication of [the original project at xbmc](https://github.com/xbmc/visualization.shadertoy), is [licensed under GPL v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
