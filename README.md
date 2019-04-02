@@ -63,7 +63,8 @@ Now you can install the newly generated zip file *visualization.shadertoy-3.14.z
 
 ## License
 
-This project uses code from [jsmn JSON parser](https://github.com/zserge/jsmn) by zserge, under [MIT license](https://github.com/zserge/jsmn/blob/master/LICENSE):
+This project uses code from [jsmn JSON parser](https://github.com/zserge/jsmn) by Serge A. Zaitsev (see [src/jsmn](https://github.com/circulosmeos/visualization.shadertoy/tree/odroid-c2/src/jsmn)), under [MIT license](https://github.com/zserge/jsmn/blob/master/LICENSE):
+
 	Copyright (c) 2010 Serge A. Zaitsev
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
