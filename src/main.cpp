@@ -1018,9 +1018,7 @@ extern "C" bool OnAction(long flags, const void *param)
       if (param)
       {
         g_currentPreset = *(int *)param % g_presets.size();
-        //newtrack = !randomise;
-        // if a new vis has been selected, show it even in randomise mode
-        newtrack = true;
+        newtrack = !randomise;
         return true;
       }
 
@@ -1388,9 +1386,6 @@ extern "C" ADDON_STATUS ADDON_SetSetting(const char *strSetting, const void* val
   }
   if (strcmp(strSetting, "randomise") == 0)
   {
-    // select a new random preset if random mode has been just selected
-    if (randomise == false && randomise != (int) *(char *)value)
-      newtrack = true;
     randomise = (int) *(char *)value;
     cout << "randomise = " << randomise << endl;
     return ADDON_STATUS_OK;
