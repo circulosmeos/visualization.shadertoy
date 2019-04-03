@@ -1039,6 +1039,8 @@ extern "C" bool OnAction(long flags, const void *param)
       break;
     case VIS_ACTION_UPDATE_ALBUMART:
       LogActionString("VIS_ACTION_UPDATE_ALBUMART", (const char *)param);
+      // make changes to Settings immediate
+      newtrack = !randomise;
       break;
     case VIS_ACTION_UPDATE_TRACK:
       LogTrack((VisTrack *)param);
@@ -1387,6 +1389,9 @@ extern "C" ADDON_STATUS ADDON_SetSetting(const char *strSetting, const void* val
   if (strcmp(strSetting, "randomise") == 0)
   {
     randomise = (int) *(char *)value;
+    // make changes to Settings immediate when randomise mode is selected
+    if (randomise && (g_activePreset == g_currentPreset))
+      newtrack = true;
     cout << "randomise = " << randomise << endl;
     return ADDON_STATUS_OK;
   }
