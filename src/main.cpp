@@ -1089,17 +1089,22 @@ extern "C" bool IsLocked()
 }
 
 
-// chunk() returns a C string from the token tok in json string str
+// chunk_to_int() returns the integer from the C string from the token tok in json string str
 // Used in ADDON_Create when parsing json file
-char *chunk(const char *str, jsmntok_t *tok)
+int chunk_to_int(const char *str, jsmntok_t *tok)
 {
   char *ss = (char *)malloc( sizeof(char) * ( tok->end - tok->start + 1 ) );
-  int i;
+  int i, result;
   for( i = tok->start; i < tok->end; i++ ) {
     ss[ i - tok->start ] = str[i];
   }
   ss[ i - tok->start ] = '\0';
-  return ss;
+
+  // if ss is not a valid integer string, result = 0
+  result = (int)strtol( ss, NULL, 0 );
+  free( ss );
+
+  return result;
 }
 
 
@@ -1176,13 +1181,13 @@ ADDON_STATUS ADDON_Create(void* hdl, void* props)
                 if ( strcmp( g_presets[nPreset].name.substr(0,5).c_str(), "TEST:" ) == 0 )
                   testingPresets++;
                 g_presets[nPreset].file = std::string( JSON_STRING, (size_t)tokens[i+2].start, (size_t)(tokens[i+2].end-tokens[i+2].start) );
-                g_presets[nPreset].channel[0] = (int)strtol( chunk( JSON_STRING.c_str(), &tokens[i+3] ), NULL, 0 );
-                g_presets[nPreset].channel[1] = (int)strtol( chunk( JSON_STRING.c_str(), &tokens[i+4] ), NULL, 0 );
-                g_presets[nPreset].channel[2] = (int)strtol( chunk( JSON_STRING.c_str(), &tokens[i+5] ), NULL, 0 );
-                g_presets[nPreset].channel[3] = (int)strtol( chunk( JSON_STRING.c_str(), &tokens[i+6] ), NULL, 0 );
+                g_presets[nPreset].channel[0] = chunk_to_int( JSON_STRING.c_str(), &tokens[i+3] );
+                g_presets[nPreset].channel[1] = chunk_to_int( JSON_STRING.c_str(), &tokens[i+4] );
+                g_presets[nPreset].channel[2] = chunk_to_int( JSON_STRING.c_str(), &tokens[i+5] );
+                g_presets[nPreset].channel[3] = chunk_to_int( JSON_STRING.c_str(), &tokens[i+6] );
                 g_presets[nPreset].timeMultiplier = 1;
                 if ( tokens[i].size > 6 ) {
-                  g_presets[nPreset].timeMultiplier = (int)strtol( chunk( JSON_STRING.c_str(), &tokens[i+7] ), NULL, 0 );
+                  g_presets[nPreset].timeMultiplier = chunk_to_int( JSON_STRING.c_str(), &tokens[i+7] );
                   if ( g_presets[nPreset].timeMultiplier != 1 && g_presets[nPreset].timeMultiplier != 2 && 
                        g_presets[nPreset].timeMultiplier != 4 && g_presets[nPreset].timeMultiplier != 8 &&
                        g_presets[nPreset].timeMultiplier != 16 ) {
