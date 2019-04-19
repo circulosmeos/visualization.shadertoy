@@ -1,4 +1,11 @@
+// Taken from https://www.shadertoy.com/view/XsBXWt#
+
 // "Fractal Cartoon" - former "DE edge detection" by Kali
+
+// Cartoon-like effect using eiffies's edge detection found here: 
+// https://www.shadertoy.com/view/4ss3WB
+// I used my own method previously but was too complicated and not compiling everywhere.
+// Thanks to the suggestion by WouterVanNifterick. 
 
 // There are no lights and no AO, only color by normals and dark edges.
 
@@ -17,8 +24,8 @@
 #define SATURATION .65
 
 
-#define detail .001
-#define t iTime*.5
+#define detail .004
+#define t iGlobalTime*.2
 
 
 const vec3 origin=vec3(-1.,.7,0.);
@@ -54,9 +61,7 @@ float de(vec3 pos) {
 		  ro=max(ro,-max(abs(pos.x+1.)-.1,pos.y-.5));
 	pos.z=abs(.25-mod(pos.z,.5));
 		  ro=max(ro,-max(abs(pos.z)-.2,pos.y-.3));
-		  ro=max(ro,-max(abs(pos.z)-.01,-pphics
-
-2));
+		  ro=max(ro,-max(abs(pos.z)-.01,-pos.y+.32));
 	float d=min(fr,ro);
 	return d;
 }
@@ -114,9 +119,9 @@ vec4 nyan(vec2 p)
 {
 	vec2 uv = p*vec2(0.4,1.0);
 	float ns=3.0;
-	float nt = iTime*ns; nt-=mod(nt,240.0/256.0/6.0); nt = mod(nt,240.0/256.0);
-	float ny = mod(iTime*ns,1.0); ny-=mod(ny,0.75); ny*=-0.05;
-	vec4 color = texture(iChannel1,vec2(uv.x/3.0+210.0/256.0-nt+0.05,.5-uv.y-ny));
+	float nt = iGlobalTime*ns; nt-=mod(nt,240.0/256.0/6.0); nt = mod(nt,240.0/256.0);
+	float ny = mod(iGlobalTime*ns,1.0); ny-=mod(ny,0.75); ny*=-0.05;
+	vec4 color = texture2D(iChannel1,vec2(uv.x/3.0+210.0/256.0-nt+0.05,.5-uv.y-ny));
 	if (uv.x<-0.3) color.a = 0.0;
 	if (uv.x>0.2) color.a=0.0;
 	return color;
@@ -138,7 +143,8 @@ vec3 raymarch(in vec3 from, in vec3 dir)
 			d=de(p);
 			det=detail*exp(.13*totdist);
 			totdist+=d; 
-		}
+		} 
+		else { break; }
 	}
 	vec3 col=vec3(0.);
 	p-=(det-d)*dir;
@@ -150,8 +156,8 @@ vec3 raymarch(in vec3 from, in vec3 dir)
 #endif		
 	totdist=clamp(totdist,0.,26.);
 	dir.y-=.02;
-	float sunsize=7.-max(0.,texture(iChannel0,vec2(.6,.2)).x)*5.; // responsive sun size
-	float an=atan(dir.x,dir.y)+iTime*1.5; // angle for drawing and rotating sun
+	float sunsize=7.-max(0.,texture2D(iChannel0,vec2(.6,.2)).x)*5.; // responsive sun size
+	float an=atan(dir.x,dir.y)+iGlobalTime*1.5; // angle for drawing and rotating sun
 	float s=pow(clamp(1.0-length(dir.xy)*sunsize-abs(.2-mod(an,.4)),0.,1.),.1); // sun
 	float sb=pow(clamp(1.0-length(dir.xy)*(sunsize-.2)-abs(.2-mod(an,.4)),0.,1.),.1); // sun border
 	float sg=pow(clamp(1.0-length(dir.xy)*(sunsize-4.5)-.5*abs(.2-mod(an,.4)),0.,1.),3.); // sun rays
@@ -204,7 +210,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 	uv.y*=iResolution.y/iResolution.x;
 	vec2 mouse=(iMouse.xy/iResolution.xy-.5)*3.;
 	if (iMouse.z<1.) mouse=vec2(0.,-0.05);
-	float fov=.9-max(0.,.7-iTime*.3);
+	float fov=.9-max(0.,.7-iGlobalTime*.3);
 	vec3 dir=normalize(vec3(uv*fov,1.));
 	dir.yz*=rot(mouse.y);
 	dir.xz*=rot(mouse.x);
