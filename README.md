@@ -4,7 +4,9 @@ This is a [Kodi](http://kodi.tv) visualization addon.
 
 You can either install this version for [ODROID-C2](https://www.hardkernel.com/shop/odroid-c2/) with Kodi 17, or compile yourself for other platforms that has Kodi 17 installed (see [Build instructions](https://github.com/circulosmeos/visualization.shadertoy#build-instructions)).
 
-Not tested on versions different from Kodi v17.6.
+**NOTE**: A version for [Raspberry Pi](https://www.raspberrypi.org/) 32-bits is available for testing purposes: see *[Installation of the zip file addon](https://github.com/circulosmeos/visualization.shadertoy#installation-of-the-zip-file-addon)*.
+
+Tested on Kodi, from versions v14 to v17.6.
 
 ## Motivation
 
@@ -16,10 +18,15 @@ Installed addons in Kodi 17 packages for ODROID-C2 do not contain any visualizat
 
 **WARNING**: Do not install the zip file addon on devices different from ODROID-C2 unless you know that the hardware is compatible (linux arm64, [GLESv2](https://en.wikipedia.org/wiki/OpenGL_ES)). Nonetheless, you can compile it to produce your own zip file addon: see the [Build instructions](https://github.com/circulosmeos/visualization.shadertoy#build-instructions).
 
-Not tested on versions different from Kodi v17.6.
+**NOTE**: A version for [Raspberry Pi 2](https://www.raspberrypi.org/products/) 32-bits (not tested on [RPi 1 or RPi 3](https://www.raspberrypi.org/products/)) is available for testing purposes: [go to the release info for RPi](https://github.com/circulosmeos/visualization.shadertoy/releases/tag/v3.14). The addon is stable, **but please, note that some shaders may hang the RPi** (RAM and GPU are different from those of ODROID-C2): if somebody do the work of deleting these ones from the json, I'd happily patch the zip!.
+
+Tested on Kodi, from versions v14 to v17.6.
 
 * Download the zip file *[visualization.shadertoy-3.14.zip](https://github.com/circulosmeos/visualization.shadertoy/releases/download/v3.14/visualization.shadertoy-3.14.zip)* to your ODROID-C2 device
 * Install from your Kodi: `Addons > box icon on top left corner > Install from zip file`
+
+
+If looking for the **RPi instructions**, please [go to the release info for RPi](https://github.com/circulosmeos/visualization.shadertoy/releases/tag/v3.14).
 
 ## shaders (visualizations)
 
@@ -46,6 +53,8 @@ Some shaders has been changed and other new ones have been added, like *[Alhambr
 Also, *cmake* now correctly compile against GLESv2 libraries.
 
 OpenGLESv2 function `texture2DLodEXT` has been added to main.cpp with `#extension GL_EXT_shader_texture_lod : enable`.
+
+**Notes for RPi version**: time multiplier (7th parameter) has been deleted from json file as it is not needed.
 
 ## Build instructions
 
