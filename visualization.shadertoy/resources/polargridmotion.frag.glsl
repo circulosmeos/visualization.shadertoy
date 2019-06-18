@@ -69,7 +69,7 @@
 
 
 // Making use of the individual particle ID to produce a random variation.
-//#define RANDOM_VARIATION
+#define RANDOM_VARIATION
 
 
 
@@ -80,7 +80,7 @@ float n2D(vec2 p) {
 
 	vec2 i = floor(p); p -= i; p *= p*(3. - p*2.);  
     
-	return dot(mat2(fract(sin(vec4(0, 1, 113, 114) + dot(i, vec2(1, 113)))*43758.5453))*
+	return dot(mat2(fract(sin(vec4(0, 1, 113, 114) + dot(i, vec2(1, 113)))*0.437585453))* // circulosmeos: numbers changed
                 vec2(1. - p.y, p.y), vec2(1. - p.x, p.x) );
 
 }
@@ -159,7 +159,7 @@ void mainImage( out vec4 O, in vec2 U ){
     // Apply a grainy randomized diagonal pattern. It's subtle, but I prefer it.
     // Without it, the background seems a little too clean.
     float pat = clamp(sin((U.x - U.y)*min(R.y, 800.)/1.5)*1. + .5, 0., 1.);
-    float rnd = fract(sin(dot(U, vec2(11.27, 112.43)))*43758.5453);
+    float rnd = fract(sin(dot(U, vec2(11.27, 112.43)))*437.585453);
     if(rnd>.5) pat *= .6; 
     else pat *= 1.4;
     bg *= pat*.3 + .75;  
@@ -176,18 +176,20 @@ void mainImage( out vec4 O, in vec2 U ){
     vec2 b = vec2(iResolution.x/iResolution.y, 1) - .1;
     vec2 q = abs(U);
     float bord = max(q.x - b.x, q.y - b.y);
-    bord = max(bord, -(bord + .11));
-    bord = max(bord, -min(q.x - b.x + .22, q.y - b.y + .22));
+    bord = max(bord, -(bord + .44)); // circulosmeos: numbers changed
+    bord = max(bord, -min(q.x - b.x + 1.22, q.y - b.y + 1.22)); // circulosmeos: numbers changed
     //bord = max(bord, -(bord + .02));
 
     
     // Render the border sight... edge things, or whatever they are.
+    // circulosmeos: code changed to sync with music
+    float bass = texture2D( iChannel0, vec2(400.,0.) ).x * 7.;
     float falloff = 1./min(R.y, 800.);
     col = mix(col, vec3(0), (1. - smoothstep(0., falloff*12., bord ))*.35);
     col = mix(col, vec3(0), (1. - smoothstep(0., falloff, bord))*.7);
     col = mix(col, bg*2.2, (1. - smoothstep(0., falloff, bord + .01)));
     col = mix(col, vec3(0), (1. - smoothstep(0., falloff, bord + .035)));
-    col = mix(col, bg*1.2, (1. - smoothstep(0., falloff, bord + .044)));   
+    col = mix(col, bg*1.2, (1. - smoothstep(0., falloff, bord + .044))) * bass;
     
     
     
@@ -310,7 +312,7 @@ void mainImage( out vec4 O, in vec2 U ){
             // Main object color 
             #ifdef RANDOM_VARIATION   
                 // Object ID based random value.
-            	float rnd = fract(sin(p.w + 37.)*43758.5453);
+            	float rnd = fract(sin(p.w + 37.)*0.437585453); // circulosmeos: numbers changed
                 // Annulus. Equivalent to: max(d, -(d + sz*.75)).
             	if(rnd>.5) d = (abs(d + sz*.375) - sz*.375); 
             
@@ -367,7 +369,7 @@ void mainImage( out vec4 O, in vec2 U ){
 	// A bit of color mixing, based on the canvas Y coordinate.
     //col = mix(col.xzy, col, .75);
     col = mix(col.xzy, col, U.y*.3 + .65);
-    
+        
     #ifndef RANDOM_VARIATION
 	#ifdef TRANSPARENT
     col = col.zyx;

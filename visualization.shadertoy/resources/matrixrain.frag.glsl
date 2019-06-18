@@ -6,7 +6,7 @@
 #define DROP_SIZE  4.0  // Higher value lowers, the size of individual droplets
 
 float rand(vec2 co){
-    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+    return fract(sin(dot(co.xy ,vec2(0.129898,0.78233))) * 4.37585453); // circulosmeos: numbers changed
 }
 
 float rchar(vec2 outer, vec2 inner, float globalTime) {
@@ -40,7 +40,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
         float r1x = floor(fragCoord.x / (15.0));
         
 
-        float ry = position.y*600.0 + rand(vec2(x, x * 3.0)) * 100000.0 + globalTime* rand(vec2(r1x, 23.0)) * 120.0;
+        float ry = position.y*600.0 + rand(vec2(x, x * 3.0)) * 1000.0 + globalTime* rand(vec2(r1x, 23.0)) * 120.0; // circulosmeos: numbers changed
         float my = mod(ry, 15.0);
         if (my > 12.0 * scaledown) {
             result = vec4(0.0);
@@ -70,7 +70,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
         float r1x = floor(fragCoord.x / (12.0));
         
 
-        float ry = position.y*700.0 + rand(vec2(x, x * 3.0)) * 100000.0 + globalTime* rand(vec2(r1x, 23.0)) * 120.0;
+        float ry = position.y*700.0 + rand(vec2(x, x * 3.0)) * 1000.0 + globalTime* rand(vec2(r1x, 23.0)) * 120.0; // circulosmeos: numbers changed
         float my = mod(ry, 15.0);
         if (my > 12.0 * scaledown) {
             result += vec4(0.0);
